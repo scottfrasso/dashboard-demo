@@ -7,5 +7,10 @@
   "workspaces": [
     "apps/*",
     "libs/*"
-  ]
+  ],
+  "scripts": {
+    "lint": "yarn workspace @dashboard/front-end run lint",
+    "build": "yarn workspace @dashboard/front-end run build && yarn workspace @dashboard/front-end run export",
+    "ci": "yarn run lint && yarn run build"
+  }
 }
