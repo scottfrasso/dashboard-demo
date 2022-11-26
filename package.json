@@ -1,0 +1,11 @@
+{
+  "name": "dash-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "private",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ]
+}
