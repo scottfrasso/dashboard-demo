@@ -8,7 +8,8 @@
     "airbnb",
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "../../.eslintrc.json"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -40,18 +41,6 @@
     "react/react-in-jsx-scope": "off",
     // allow jsx syntax in js files (for next.js project)
     "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
-    "indent": ["error", 2],
-    "no-tabs": 0,
-    "max-len": [
-      "warn",
-      {
-        "code": 200,
-        "ignoreUrls": true,
-        "ignoreStrings": true,
-        "ignoreTemplateLiterals": true
-      }
-    ],
-    "no-plusplus": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -61,13 +50,8 @@
       }
     ],
     "react/jsx-props-no-spreading": "off",
-    "@typescript-eslint/no-non-null-assertion": "off",
-    "import/prefer-default-export": "off",
     "react/prop-types": 0,
     "react/require-default-props": 0,
-    "no-await-in-loop": 0, // Maybe turn this off later
-    "@typescript-eslint/ban-ts-comment": 0, // Turn this off later
-    "no-console": 0, // turn off later
     "react/jsx-no-useless-fragment": 0 // fix this later
   }
 }
