@@ -9,8 +9,14 @@ jobs:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     steps:
       - uses: actions/checkout@v2
-      - run: npm install -g eslint@8.26.0
-      - run: yarn run ci
+      - name: Install dependencies
+        run: yarn install
+      - name: Install Eslint
+        run: npm install -g eslint@8.26.0
+      - name: Build static assets
+        run: yarn workspace @dashboard/front-end run build
+      - name: Export static site
+        run: yarn workspace @dashboard/front-end run export
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
