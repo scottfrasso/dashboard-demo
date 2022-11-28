@@ -1,48 +1,50 @@
-import { useState, ReactNode, MouseEvent, useEffect } from 'react'
-import Link from 'next/link'
+import {
+  useState, ReactNode, MouseEvent, useEffect,
+} from 'react';
+import Link from 'next/link';
 
 // ** MUI Components
-import Alert from '@mui/material/Alert'
-import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import Checkbox from '@mui/material/Checkbox'
-import TextField from '@mui/material/TextField'
-import InputLabel from '@mui/material/InputLabel'
-import IconButton from '@mui/material/IconButton'
-import Box, { BoxProps } from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import FormControl from '@mui/material/FormControl'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import { styled, useTheme } from '@mui/material/styles'
-import FormHelperText from '@mui/material/FormHelperText'
-import InputAdornment from '@mui/material/InputAdornment'
-import FormControlLabel from '@mui/material/FormControlLabel'
+import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import Checkbox from '@mui/material/Checkbox';
+import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import IconButton from '@mui/material/IconButton';
+import Box, { BoxProps } from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import FormControl from '@mui/material/FormControl';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import { styled, useTheme } from '@mui/material/styles';
+import FormHelperText from '@mui/material/FormHelperText';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from 'src/@core/components/icon';
 
 // ** Third Party Imports
-import * as yup from 'yup'
-import { useForm, Controller } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 // ** Hooks
-import { useAuth } from 'src/hooks/useAuth'
-import useBgColor, { UseBgColorType } from 'src/@core/hooks/useBgColor'
-import { useSettings } from 'src/@core/hooks/useSettings'
+import { useAuth } from 'src/hooks/useAuth';
+import useBgColor, { UseBgColorType } from 'src/@core/hooks/useBgColor';
+import { useSettings } from 'src/@core/hooks/useSettings';
 
 // ** Configs
-import themeConfig from 'src/configs/themeConfig'
+import themeConfig from 'src/configs/themeConfig';
 
 // ** Layout Import
-import BlankLayout from 'src/@core/layouts/BlankLayout'
+import BlankLayout from 'src/@core/layouts/BlankLayout';
 
 // ** Styled Components
 const LoginIllustration = styled('img')({
   height: 'auto',
   maxWidth: '100%',
-})
+});
 
 const RightWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   width: '100%',
@@ -60,23 +62,23 @@ const RightWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     padding: theme.spacing(12),
   },
-}))
+}));
 
 const LinkStyled = styled(Link)(({ theme }) => ({
   fontSize: '0.875rem',
   textDecoration: 'none',
   color: theme.palette.primary.main,
-}))
+}));
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().min(5).required(),
-})
+});
 
 const defaultValues = {
   password: 'Password123!',
   email: 'scott@example.com',
-}
+};
 
 interface FormData {
   email: string
@@ -84,18 +86,18 @@ interface FormData {
 }
 
 function LoginPage() {
-  const [rememberMe, setRememberMe] = useState<boolean>(true)
-  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [rememberMe, setRememberMe] = useState<boolean>(true);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   // ** Hooks
-  const auth = useAuth()
-  const theme = useTheme()
-  const { settings } = useSettings()
-  const bgColors: UseBgColorType = useBgColor()
-  const hidden = useMediaQuery(theme.breakpoints.down('lg'))
+  const auth = useAuth();
+  const theme = useTheme();
+  const { settings } = useSettings();
+  const bgColors: UseBgColorType = useBgColor();
+  const hidden = useMediaQuery(theme.breakpoints.down('lg'));
 
   // ** Var
-  const { skin } = settings
+  const { skin } = settings;
 
   const {
     control,
@@ -106,17 +108,17 @@ function LoginPage() {
     defaultValues,
     mode: 'onBlur',
     resolver: yupResolver(schema),
-  })
+  });
 
   const onSubmit = (data: FormData) => {
-    const { email, password } = data
+    const { email, password } = data;
     auth.login({ email, password, rememberMe }, () => {
       setError('email', {
         type: 'manual',
         message: 'Email or Password is invalid',
-      })
-    })
-  }
+      });
+    });
+  };
 
   return (
     <Box className="content-right">
@@ -139,8 +141,8 @@ function LoginPage() {
       ) : null}
       <RightWrapper
         sx={{
-          ...(skin === 'bordered' &&
-            !hidden && { borderLeft: `1px solid ${theme.palette.divider}` }),
+          ...(skin === 'bordered'
+            && !hidden && { borderLeft: `1px solid ${theme.palette.divider}` }),
         }}
       >
         <Box sx={{ mx: 'auto', maxWidth: 400 }}>
@@ -182,7 +184,10 @@ function LoginPage() {
             </Typography>
           </Box>
           <Typography variant="h6" sx={{ mb: 1.5 }}>
-            Welcome to {themeConfig.templateName}! 👋🏻
+            Welcome to
+            {' '}
+            {themeConfig.templateName}
+            ! 👋🏻
           </Typography>
           <Typography sx={{ mb: 6, color: 'text.secondary' }}>
             Please sign-in to your account and start the adventure
@@ -200,7 +205,12 @@ function LoginPage() {
               variant="caption"
               sx={{ mb: 2, display: 'block', color: 'primary.main' }}
             >
-              Admin: <strong>scott@example.com</strong> / Pass:{' '}
+              Admin:
+              {' '}
+              <strong>scott@example.com</strong>
+              {' '}
+              / Pass:
+              {' '}
               <strong>anything</strong>
             </Typography>
           </Alert>
@@ -248,7 +258,7 @@ function LoginPage() {
                     id="auth-login-v2-password"
                     error={Boolean(errors.password)}
                     type={showPassword ? 'text' : 'password'}
-                    endAdornment={
+                    endAdornment={(
                       <InputAdornment position="end">
                         <IconButton
                           edge="end"
@@ -261,7 +271,7 @@ function LoginPage() {
                           />
                         </IconButton>
                       </InputAdornment>
-                    }
+                    )}
                   />
                 )}
               />
@@ -279,7 +289,7 @@ function LoginPage() {
                 flexWrap: 'wrap',
                 justifyContent: 'space-between',
               }}
-            ></Box>
+            />
             <Button
               fullWidth
               size="large"
@@ -296,16 +306,16 @@ function LoginPage() {
                 flexWrap: 'wrap',
                 justifyContent: 'center',
               }}
-            ></Box>
+            />
           </form>
         </Box>
       </RightWrapper>
     </Box>
-  )
+  );
 }
 
-LoginPage.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>
+LoginPage.getLayout = (page: ReactNode) => <BlankLayout>{page}</BlankLayout>;
 
-LoginPage.guestGuard = true
+LoginPage.guestGuard = true;
 
-export default LoginPage
+export default LoginPage;

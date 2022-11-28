@@ -1,11 +1,12 @@
-import { AuthCredentialsDTO, LoginDTO } from '@dashboard/dtos'
+import { AuthCredentialsDTO, LoginDTO } from '@dashboard/dtos';
 
-import { ApiClient } from './api-client'
+import { ApiClient } from './api-client';
 
 export class Auth {
-  private readonly api: ApiClient
+  private readonly api: ApiClient;
+
   constructor(api: ApiClient) {
-    this.api = api
+    this.api = api;
   }
 
   public async login(loginDTO: LoginDTO): Promise<AuthCredentialsDTO> {
@@ -13,8 +14,8 @@ export class Auth {
       'POST',
       'auth/login',
       loginDTO,
-    )
-    this.api.setCredentials(credentials.authToken)
-    return credentials
+    );
+    this.api.setCredentials(credentials.authToken);
+    return credentials;
   }
 }

@@ -1,4 +1,4 @@
-import { UserMeResponseDTO } from '@dashboard/dtos'
+import { UserMeResponseDTO } from '@dashboard/dtos';
 
 export type ErrCallbackType = (err: { [key: string]: string }) => void
 
