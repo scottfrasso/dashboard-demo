@@ -1,4 +1,4 @@
-import { useState, ReactNode, MouseEvent } from 'react'
+import { useState, ReactNode, MouseEvent, useEffect } from 'react'
 import Link from 'next/link'
 
 // ** MUI Components
@@ -37,6 +37,7 @@ import themeConfig from 'src/configs/themeConfig'
 
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout'
+import { useRouter } from 'next/router'
 
 // ** Styled Components
 const LoginIllustration = styled('img')({
@@ -93,8 +94,15 @@ function LoginPage() {
   const { settings } = useSettings()
   const bgColors: UseBgColorType = useBgColor()
   const hidden = useMediaQuery(theme.breakpoints.down('lg'))
+  const router = useRouter()
 
   console.log(`Is Loading = ${auth.loading}`)
+  console.log(`Has User = ${!!auth.user}`)
+
+  useEffect(() => {
+    if (!auth.user) return
+    router.push('/home')
+  }, [])
 
   // ** Var
   const { skin } = settings

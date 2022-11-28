@@ -44,19 +44,27 @@ const AuthProvider = ({ children }: Props) => {
         return
       }
 
-      setLoading(true)
-
       api.setCredentials(storedToken!)
       let userMeResponse: UserMeResponseDTO | null
       try {
         userMeResponse = await api.users.me()
       } catch (error) {
+        setLoading(false)
         handleLogout()
         return
       }
 
-      setLoading(false)
       setUser(userMeResponse!)
+      window.localStorage.setItem(
+        USER_DATA_NAME,
+        JSON.stringify(userMeResponse!),
+      )
+      setLoading(false)
+
+      /*
+      if (!router.pathname.includes('login')) {
+        router.replace('/login')
+      }*/
     }
 
     initAuth().catch(console.error)
@@ -88,6 +96,7 @@ const AuthProvider = ({ children }: Props) => {
 
     setLoading(false)
     setUser(userMeResponse!)
+    window.localStorage.setItem(USER_DATA_NAME, JSON.stringify(userMeResponse!))
     const returnUrl = (router.query.returnUrl as string) || '/home'
 
     router.replace(returnUrl)
