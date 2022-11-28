@@ -1,0 +1,12 @@
+{
+  "name": "@dashboard/api-client",
+  "version": "0.0.1",
+  "private": true,
+  "license": "UNLICENSED",
+  "main": "src/main.ts",
+  "dependencies": {
+    "@dashboard/dtos": "1.0.0",
+    "axios": "^1.2.0",
+    "typescript": "^4.9.3"
+  }
+}
