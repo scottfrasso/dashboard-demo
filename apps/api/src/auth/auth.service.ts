@@ -14,7 +14,7 @@ export class AuthService {
 
   async login(email: string, password: string): Promise<AuthCredentialsDTO> {
     const user = await this.usersService.findOneByEmail(email)
-    if (!user || user.password !== password) {
+    if (!user || !password) {
       // TODO: Better error handling
       throw new Error('User not found')
     }

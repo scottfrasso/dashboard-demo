@@ -1,33 +1,23 @@
-// ** React Imports
 import { createContext, useEffect, useState, ReactNode } from 'react'
-
-// ** Next Import
 import { useRouter } from 'next/router'
 
-// ** Axios
-import axios from 'axios'
-
-// ** Config
-import authConfig from 'src/configs/auth'
-
-// ** Types
+import { AUTH_TOKEN_NAME, USER_DATA_NAME } from './constants'
 import {
   AuthValuesType,
   RegisterParams,
   LoginParams,
   ErrCallbackType,
-  UserDataType,
 } from './types'
+import { api } from 'src/hooks/useApi'
+import { AuthCredentialsDTO, UserMeResponseDTO } from '@dashboard/dtos'
 
 // ** Defaults
 const defaultProvider: AuthValuesType = {
   user: null,
   loading: true,
-  setUser: () => null,
   setLoading: () => Boolean,
   login: () => Promise.resolve(),
   logout: () => Promise.resolve(),
-  register: () => Promise.resolve(),
 }
 
 const AuthContext = createContext(defaultProvider)
@@ -36,9 +26,11 @@ type Props = {
   children: ReactNode
 }
 
-function AuthProvider({ children }: Props) {
+const AuthProvider = ({ children }: Props) => {
   // ** States
-  const [user, setUser] = useState<UserDataType | null>(defaultProvider.user)
+  const [user, setUser] = useState<UserMeResponseDTO | null>(
+    defaultProvider.user,
+  )
   const [loading, setLoading] = useState<boolean>(defaultProvider.loading)
 
   // ** Hooks
@@ -46,92 +38,69 @@ function AuthProvider({ children }: Props) {
 
   useEffect(() => {
     const initAuth = async (): Promise<void> => {
-      const storedToken = window.localStorage.getItem(
-        authConfig.storageTokenKeyName,
-      )!
-      if (storedToken) {
-        setLoading(true)
-        await axios
-          .get(authConfig.meEndpoint, {
-            headers: {
-              Authorization: storedToken,
-            },
-          })
-          .then(async (response) => {
-            setLoading(false)
-            setUser({ ...response.data.userData })
-          })
-          .catch(() => {
-            localStorage.removeItem('userData')
-            localStorage.removeItem('refreshToken')
-            localStorage.removeItem('accessToken')
-            setUser(null)
-            setLoading(false)
-            if (
-              authConfig.onTokenExpiration === 'logout' &&
-              !router.pathname.includes('login')
-            ) {
-              router.replace('/login')
-            }
-          })
-      } else {
+      const storedToken = window.localStorage.getItem(AUTH_TOKEN_NAME)
+      if (!storedToken) {
         setLoading(false)
+        return
       }
+
+      setLoading(true)
+
+      api.setCredentials(storedToken!)
+      let userMeResponse: UserMeResponseDTO | null
+      try {
+        userMeResponse = await api.users.me()
+      } catch (error) {
+        handleLogout()
+        return
+      }
+
+      setLoading(false)
+      setUser(userMeResponse!)
     }
 
-    initAuth()
+    initAuth().catch(console.error)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  //asdfsa
 
-  const handleLogin = (
+  const handleLogin = async (
     params: LoginParams,
     errorCallback?: ErrCallbackType,
   ) => {
-    axios
-      .post(authConfig.loginEndpoint, params)
-      .then(async (response) => {
-        const { returnUrl } = router.query
+    let credentials: AuthCredentialsDTO | null
+    try {
+      credentials = await api.auth.login(params)
+    } catch (error) {
+      console.error('An error occurred while logging in', error)
+      if (errorCallback) errorCallback({})
+      return
+    }
 
-        setUser({ ...response.data.userData })
+    window.localStorage.setItem(AUTH_TOKEN_NAME, credentials.authToken)
 
-        const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+    let userMeResponse: UserMeResponseDTO | null
+    try {
+      userMeResponse = await api.users.me()
+    } catch (error) {
+      handleLogout()
+      return
+    }
 
-        router.replace(redirectURL as string)
-      })
+    setLoading(false)
+    setUser(userMeResponse!)
+    const returnUrl = (router.query.returnUrl as string) || '/home'
 
-      .catch((err) => {
-        if (errorCallback) errorCallback(err)
-      })
+    router.replace(returnUrl)
   }
 
   const handleLogout = () => {
     setUser(null)
-    window.localStorage.removeItem('userData')
-    window.localStorage.removeItem(authConfig.storageTokenKeyName)
+    setLoading(false)
+    window.localStorage.removeItem(USER_DATA_NAME)
+    window.localStorage.removeItem(AUTH_TOKEN_NAME)
     router.push('/login')
   }
 
-  const handleRegister = (
-    params: RegisterParams,
-    errorCallback?: ErrCallbackType,
-  ) => {
-    axios
-      .post(authConfig.registerEndpoint, params)
-      .then((res) => {
-        if (res.data.error) {
-          if (errorCallback) errorCallback(res.data.error)
-        } else {
-          handleLogin({ email: params.email, password: params.password })
-        }
-      })
-      .catch((err: { [key: string]: string }) =>
-        errorCallback ? errorCallback(err) : null,
-      )
-  }
-
-  // TODO: Fix this
-  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const values = {
     user,
     loading,
@@ -139,7 +108,6 @@ function AuthProvider({ children }: Props) {
     setLoading,
     login: handleLogin,
     logout: handleLogout,
-    register: handleRegister,
   }
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>

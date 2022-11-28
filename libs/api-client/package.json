@@ -1,9 +1,9 @@
 {
   "name": "@dashboard/api-client",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "license": "UNLICENSED",
-  "main": "src/main.ts",
+  "main": "src/api-client.ts",
   "dependencies": {
     "@dashboard/dtos": "1.0.0",
     "axios": "^1.2.0",

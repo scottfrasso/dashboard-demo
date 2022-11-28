@@ -1,7 +1,4 @@
-// ** React Imports
 import { useState, ReactNode, MouseEvent } from 'react'
-
-// ** Next Imports
 import Link from 'next/link'
 
 // ** MUI Components
@@ -77,8 +74,8 @@ const schema = yup.object().shape({
 })
 
 const defaultValues = {
-  password: 'admin',
-  email: 'admin@sneat.com',
+  password: 'Password123!',
+  email: 'scott@example.com',
 }
 
 interface FormData {
@@ -96,6 +93,8 @@ function LoginPage() {
   const { settings } = useSettings()
   const bgColors: UseBgColorType = useBgColor()
   const hidden = useMediaQuery(theme.breakpoints.down('lg'))
+
+  console.log(`Is Loading = ${auth.loading}`)
 
   // ** Var
   const { skin } = settings

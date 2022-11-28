@@ -1,12 +1,16 @@
 import { Controller, Request, Get, UseGuards } from '@nestjs/common'
 
-import { JwtAuthGuard } from '../auth/jtw-auth-guard'
+import { AuthorizedUser, UserMeResponseDTO } from '@dashboard/dtos'
+
+import { User } from '../decorators/user.decorator'
+import { UsersService } from './users.service'
 
 @Controller('users')
 export class UsersController {
-  @UseGuards(JwtAuthGuard)
+  constructor(private readonly usersService: UsersService) {}
+
   @Get('me')
-  async login(@Request() req) {
-    return req.user
+  async login(@User() user: AuthorizedUser): Promise<UserMeResponseDTO> {
+    return await this.usersService.findOneByEmail(user.email)
   }
 }

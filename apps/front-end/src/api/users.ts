@@ -9,6 +9,6 @@ export class Users {
   }
 
   public async me(): Promise<UserMeResponseDTO> {
-    return this.api.callAPI('GET', 'users/me')
+    return await this.api.callAPI<void, UserMeResponseDTO>('GET', 'users/me')
   }
 }

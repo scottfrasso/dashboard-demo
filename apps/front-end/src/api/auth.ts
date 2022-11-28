@@ -9,6 +9,12 @@ export class Auth {
   }
 
   public async login(loginDTO: LoginDTO): Promise<AuthCredentialsDTO> {
-    return this.api.callAPI('POST', 'auth/login', loginDTO)
+    const credentials = await this.api.callAPI<LoginDTO, AuthCredentialsDTO>(
+      'POST',
+      'auth/login',
+      loginDTO,
+    )
+    this.api.setCredentials(credentials.authToken)
+    return credentials
   }
 }

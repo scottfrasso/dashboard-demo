@@ -1,24 +1,19 @@
 import { Injectable } from '@nestjs/common'
 
-export type User = {
-  id: number
-  email: string
-  name: string
-  password: string
-}
+import { UserMeResponseDTO } from '@dashboard/dtos'
 
 @Injectable()
 export class UsersService {
-  private readonly users: User[] = [
+  private readonly users: UserMeResponseDTO[] = [
     {
-      id: 1,
+      id: '123',
+      role: 'admin',
       email: 'scott@example.com',
-      name: 'Scott',
-      password: 'password',
+      fullName: 'Scott F.',
     },
   ]
 
-  async findOneByEmail(email: string): Promise<User | undefined> {
+  async findOneByEmail(email: string): Promise<UserMeResponseDTO | undefined> {
     return this.users.find((user) => user.email === email)
   }
 }
