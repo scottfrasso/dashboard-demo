@@ -1,7 +1,6 @@
-// ** React Imports
-import { useState, ReactNode, MouseEvent } from 'react';
-
-// ** Next Imports
+import {
+  useState, ReactNode, MouseEvent, useEffect,
+} from 'react';
 import Link from 'next/link';
 
 // ** MUI Components
@@ -77,8 +76,8 @@ const schema = yup.object().shape({
 });
 
 const defaultValues = {
-  password: 'admin',
-  email: 'admin@sneat.com',
+  password: 'Password123!',
+  email: 'scott@example.com',
 };
 
 interface FormData {
@@ -208,23 +207,11 @@ function LoginPage() {
             >
               Admin:
               {' '}
-              <strong>admin@sneat.com</strong>
+              <strong>scott@example.com</strong>
               {' '}
               / Pass:
               {' '}
-              <strong>admin</strong>
-            </Typography>
-            <Typography
-              variant="caption"
-              sx={{ display: 'block', color: 'primary.main' }}
-            >
-              Client:
-              {' '}
-              <strong>client@sneat.com</strong>
-              {' '}
-              / Pass:
-              {' '}
-              <strong>client</strong>
+              <strong>anything</strong>
             </Typography>
           </Alert>
           <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
@@ -302,24 +289,7 @@ function LoginPage() {
                 flexWrap: 'wrap',
                 justifyContent: 'space-between',
               }}
-            >
-              <FormControlLabel
-                label="Remember Me"
-                sx={{
-                  '& .MuiFormControlLabel-label': {
-                    fontSize: '0.875rem',
-                    color: 'text.secondary',
-                  },
-                }}
-                control={(
-                  <Checkbox
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                  />
-                )}
-              />
-              <LinkStyled href="/forgot-password">Forgot Password?</LinkStyled>
-            </Box>
+            />
             <Button
               fullWidth
               size="large"
@@ -336,58 +306,7 @@ function LoginPage() {
                 flexWrap: 'wrap',
                 justifyContent: 'center',
               }}
-            >
-              <Typography variant="body2" sx={{ mr: 2 }}>
-                New on our platform?
-              </Typography>
-              <Typography>
-                <LinkStyled href="/register">Create an account</LinkStyled>
-              </Typography>
-            </Box>
-            <Divider sx={{ my: `${theme.spacing(6)} !important` }}>or</Divider>
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <IconButton
-                href="/"
-                component={Link}
-                sx={{ color: '#497ce2' }}
-                onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}
-              >
-                <Icon icon="bxl:facebook-circle" />
-              </IconButton>
-              <IconButton
-                href="/"
-                component={Link}
-                sx={{ color: '#1da1f2' }}
-                onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}
-              >
-                <Icon icon="bxl:twitter" />
-              </IconButton>
-              <IconButton
-                href="/"
-                component={Link}
-                onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}
-                sx={{
-                  color:
-                    theme.palette.mode === 'light' ? '#272727' : 'grey.300',
-                }}
-              >
-                <Icon icon="bxl:github" />
-              </IconButton>
-              <IconButton
-                href="/"
-                component={Link}
-                sx={{ color: '#db4437' }}
-                onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}
-              >
-                <Icon icon="bxl:google" />
-              </IconButton>
-            </Box>
+            />
           </form>
         </Box>
       </RightWrapper>
