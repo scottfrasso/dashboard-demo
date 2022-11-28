@@ -37,7 +37,6 @@ import themeConfig from 'src/configs/themeConfig'
 
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout'
-import { useRouter } from 'next/router'
 
 // ** Styled Components
 const LoginIllustration = styled('img')({
@@ -94,15 +93,6 @@ function LoginPage() {
   const { settings } = useSettings()
   const bgColors: UseBgColorType = useBgColor()
   const hidden = useMediaQuery(theme.breakpoints.down('lg'))
-  const router = useRouter()
-
-  console.log(`Is Loading = ${auth.loading}`)
-  console.log(`Has User = ${!!auth.user}`)
-
-  useEffect(() => {
-    if (!auth.user) return
-    router.push('/home')
-  }, [])
 
   // ** Var
   const { skin } = settings
@@ -210,15 +200,8 @@ function LoginPage() {
               variant="caption"
               sx={{ mb: 2, display: 'block', color: 'primary.main' }}
             >
-              Admin: <strong>admin@sneat.com</strong> / Pass:{' '}
-              <strong>admin</strong>
-            </Typography>
-            <Typography
-              variant="caption"
-              sx={{ display: 'block', color: 'primary.main' }}
-            >
-              Client: <strong>client@sneat.com</strong> / Pass:{' '}
-              <strong>client</strong>
+              Admin: <strong>scott@example.com</strong> / Pass:{' '}
+              <strong>anything</strong>
             </Typography>
           </Alert>
           <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
@@ -296,24 +279,7 @@ function LoginPage() {
                 flexWrap: 'wrap',
                 justifyContent: 'space-between',
               }}
-            >
-              <FormControlLabel
-                label="Remember Me"
-                sx={{
-                  '& .MuiFormControlLabel-label': {
-                    fontSize: '0.875rem',
-                    color: 'text.secondary',
-                  },
-                }}
-                control={
-                  <Checkbox
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                  />
-                }
-              />
-              <LinkStyled href="/forgot-password">Forgot Password?</LinkStyled>
-            </Box>
+            ></Box>
             <Button
               fullWidth
               size="large"
@@ -330,58 +296,7 @@ function LoginPage() {
                 flexWrap: 'wrap',
                 justifyContent: 'center',
               }}
-            >
-              <Typography variant="body2" sx={{ mr: 2 }}>
-                New on our platform?
-              </Typography>
-              <Typography>
-                <LinkStyled href="/register">Create an account</LinkStyled>
-              </Typography>
-            </Box>
-            <Divider sx={{ my: `${theme.spacing(6)} !important` }}>or</Divider>
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <IconButton
-                href="/"
-                component={Link}
-                sx={{ color: '#497ce2' }}
-                onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}
-              >
-                <Icon icon="bxl:facebook-circle" />
-              </IconButton>
-              <IconButton
-                href="/"
-                component={Link}
-                sx={{ color: '#1da1f2' }}
-                onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}
-              >
-                <Icon icon="bxl:twitter" />
-              </IconButton>
-              <IconButton
-                href="/"
-                component={Link}
-                onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}
-                sx={{
-                  color:
-                    theme.palette.mode === 'light' ? '#272727' : 'grey.300',
-                }}
-              >
-                <Icon icon="bxl:github" />
-              </IconButton>
-              <IconButton
-                href="/"
-                component={Link}
-                sx={{ color: '#db4437' }}
-                onClick={(e: MouseEvent<HTMLElement>) => e.preventDefault()}
-              >
-                <Icon icon="bxl:google" />
-              </IconButton>
-            </Box>
+            ></Box>
           </form>
         </Box>
       </RightWrapper>
