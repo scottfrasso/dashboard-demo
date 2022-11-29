@@ -18,6 +18,9 @@ jobs:
       - name: Export static site
         run: yarn workspace @dashboard/front-end run export
       - uses: FirebaseExtended/action-hosting-deploy@v0
+        env:
+          NEXT_PUBLIC_API_URL: https://api-dev-73g76zkzja-lm.a.run.app
+          FIREBASE_PROJECT_PATH: apps/front-end
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DASH_DEMO_F1846 }}'
