@@ -15,6 +15,19 @@ jobs:
         run: npm install -g eslint@8.26.0
       - name: Lint
         run: yarn run lint
+      - name: Build the front-end static assets
+        run: yarn workspace @dashboard/front-end run build
+      - name: Export the front-end static site
+        run: yarn workspace @dashboard/front-end run export
+      - name: Deploy front-end
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        env:
+          NEXT_PUBLIC_API_URL: https://api-dev-73g76zkzja-lm.a.run.app
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DASH_DEMO_F1846 }}'
+          projectId: dash-demo-f1846
+          entrypoint: './apps/front-end'
       - name: Build the landing page
         run: yarn run build
       - name: Deploy landing page
@@ -26,16 +39,3 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DASH_DEMO_F1846 }}'
           projectId: dash-demo-f1846
           entrypoint: './apps/landing-page'
-      - name: Build static assets
-        run: yarn workspace @dashboard/front-end run build
-      - name: Export static site
-        run: yarn workspace @dashboard/front-end run export
-      - name: Deploy front-end
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        env:
-          NEXT_PUBLIC_API_URL: https://api-dev-73g76zkzja-lm.a.run.app
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DASH_DEMO_F1846 }}'
-          projectId: dash-demo-f1846
-          entrypoint: './apps/front-end'
