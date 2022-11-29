@@ -20,7 +20,7 @@ jobs:
       - name: Export the front-end static site
         run: yarn workspace @dashboard/front-end run export
       - name: Build the landing page
-        run: yarn run build
+        run: yarn workspace @dashboard/landing-page build
       - name: Deploy sites
         uses: FirebaseExtended/action-hosting-deploy@v0
         env:
