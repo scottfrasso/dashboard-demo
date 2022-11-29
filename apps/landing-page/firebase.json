@@ -1,7 +1,7 @@
 {
   "hosting": {
-    "target": "dash-demo-f1846",
-    "public": "out",
+    "target": "scotts-landing-page",
+    "public": "dist",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
