@@ -1,11 +1,11 @@
 export type SurveyDTO = {
-  favoriteColor: String
-  favoriteNumber: Number
+  favoriteColor: SurveyDTOFavoriteColor
+  favoriteNumber: number
 }
 
 export enum SurveyDTOFavoriteColor {
-  RED = 'red',
-  GREEN = 'green',
-  BLUE = 'blue',
-  YELLOW = 'yellow',
+  RED = 'RED',
+  GREEN = 'GREEN',
+  BLUE = 'BLUE',
+  YELLOW = 'YELLOW',
 }

@@ -8,21 +8,26 @@ import {
   SelectChangeEvent,
   MenuItem,
   Button,
+  InputLabel,
 } from '@mui/material'
+
+import './App.css'
 
 import { SurveyDTO, SurveyDTOFavoriteColor } from '@dashboard/dtos'
 
 function App() {
   const [favoriteNumber, setFavoriteNumber] = useState(0)
-  const [favoriteColor, setFavoriteColor] = useState('green')
+  const [favoriteColor, setFavoriteColor] = useState<SurveyDTOFavoriteColor>(
+    SurveyDTOFavoriteColor.GREEN,
+  )
   const [isLoading, setIsLoading] = useState(false)
   const [isDone, setIsDone] = useState(false)
 
   const handleColorChange = (
-    event: SelectChangeEvent<string>,
+    event: SelectChangeEvent<SurveyDTOFavoriteColor>,
     child: ReactNode,
   ) => {
-    setFavoriteColor(child?.toString() || 'green')
+    setFavoriteColor(event.target.value as SurveyDTOFavoriteColor)
   }
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -54,17 +59,21 @@ function App() {
       })
   }
 
-  const colors: string[] = Object.values(SurveyDTOFavoriteColor)
+  const renderSelectColorMenu = () => {
+    const colors: string[] = Object.values(SurveyDTOFavoriteColor)
+
+    return colors.map((color: string) => {
+      return (
+        <MenuItem key={color} value={color}>
+          {color}
+        </MenuItem>
+      )
+    })
+  }
 
   if (isDone) {
     return (
-      <Grid
-        container
-        direction='column'
-        alignItems='center'
-        justifyContent='center'
-        sx={{ height: '100vh' }}
-      >
+      <Grid container alignItems='center' justifyContent='center'>
         <div>Thank you for submitting the survey!</div>
       </Grid>
     )
@@ -72,13 +81,7 @@ function App() {
 
   if (isLoading) {
     return (
-      <Grid
-        container
-        direction='column'
-        alignItems='center'
-        justifyContent='center'
-        sx={{ height: '100vh' }}
-      >
+      <Grid container alignItems='center' justifyContent='center'>
         <div>Loading...</div>
       </Grid>
     )
@@ -86,36 +89,31 @@ function App() {
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <Grid
-        container
-        direction='column'
-        alignItems='center'
-        justifyContent='center'
-        sx={{ height: '100vh' }}
-      >
-        <Grid item sm={2}>
-          <FormLabel>What is your favorite number?</FormLabel>
-          <TextField
-            id='favorite-number'
-            name='favorite number'
-            type='number'
-            value={favoriteNumber}
-            onChange={(e) => setFavoriteNumber(Number(e.target.value))}
-          />
+      <Grid container alignItems='center' justifyContent='center' spacing={6}>
+        <Grid item sm={12}>
+          <FormControl fullWidth>
+            <TextField
+              label='What is your favorite number?'
+              id='favorite-number'
+              name='favorite number'
+              type='number'
+              value={favoriteNumber}
+              onChange={(e) => setFavoriteNumber(Number(e.target.value))}
+            />
+          </FormControl>
         </Grid>
-        <Grid item sm={2}>
-          <FormLabel>What is your favorit color?</FormLabel>
-          <FormControl>
+        <Grid item sm={12}>
+          <FormControl fullWidth>
+            <InputLabel id='favorite-color-select-label'>
+              What is your favorit color?
+            </InputLabel>
             <Select
+              labelId='favorite-color-select-label'
               name='favorite-color'
               value={favoriteColor}
               onChange={handleColorChange}
             >
-              {colors.map((color) => (
-                <MenuItem key={color} value={color}>
-                  {color}
-                </MenuItem>
-              ))}
+              {renderSelectColorMenu()}
             </Select>
           </FormControl>
         </Grid>

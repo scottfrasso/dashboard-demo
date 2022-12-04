@@ -1,0 +1,13 @@
+#root {
+  margin: auto;
+  width: 500px;
+  height: 200px;
+  background-color: white;
+  padding: 100px;
+}
+
+label {
+  font-size: 20px;
+  font-weight: bold;
+  background-color: white;
+}
