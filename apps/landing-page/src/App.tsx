@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import {
   FormControl,
   TextField,
@@ -14,6 +14,7 @@ import {
 import './App.css'
 
 import { SurveyDTO, SurveyDTOFavoriteColor } from '@dashboard/dtos'
+import { animate } from './Starfield'
 
 function App() {
   const [favoriteNumber, setFavoriteNumber] = useState(0)
@@ -22,6 +23,10 @@ function App() {
   )
   const [isLoading, setIsLoading] = useState(false)
   const [isDone, setIsDone] = useState(false)
+
+  useEffect(() => {
+    animate()
+  }, [])
 
   const handleColorChange = (
     event: SelectChangeEvent<SurveyDTOFavoriteColor>,
