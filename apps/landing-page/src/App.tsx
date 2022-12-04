@@ -67,13 +67,11 @@ function App() {
   const renderSelectColorMenu = () => {
     const colors: string[] = Object.values(SurveyDTOFavoriteColor)
 
-    return colors.map((color: string) => {
-      return (
-        <MenuItem key={color} value={color}>
-          {color}
-        </MenuItem>
-      )
-    })
+    return colors.map((color: string) => (
+      <MenuItem key={color} value={color}>
+        {color}
+      </MenuItem>
+    ))
   }
 
   if (isDone) {

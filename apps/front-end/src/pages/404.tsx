@@ -30,23 +30,23 @@ function Error404() {
   const theme = useTheme();
 
   return (
-    <Box className="content-center">
+    <Box className='content-center'>
       <Box sx={{
         p: 5, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
       }}
       >
         <BoxWrapper>
-          <Typography variant="h4" sx={{ mb: 2 }}>
+          <Typography variant='h4' sx={{ mb: 2 }}>
             Page Not Found :(
           </Typography>
           <Typography sx={{ mb: 6, color: 'text.secondary' }}>
             Oops! 😖 The requested URL was not found on this server.
           </Typography>
-          <Button href="/" component={Link} variant="contained">
+          <Button href='/' component={Link} variant='contained'>
             Back to Home
           </Button>
         </BoxWrapper>
-        <Img width="500" alt="error-illustration" src={`/images/pages/page-misc-error-${theme.palette.mode}.png`} />
+        <Img width='500' alt='error-illustration' src={`/images/pages/page-misc-error-${theme.palette.mode}.png`} />
       </Box>
     </Box>
   );

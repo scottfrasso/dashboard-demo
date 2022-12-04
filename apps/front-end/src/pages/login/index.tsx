@@ -1,4 +1,6 @@
-import { useState, ReactNode, MouseEvent, useEffect } from 'react'
+import {
+  useState, ReactNode, MouseEvent, useEffect,
+} from 'react'
 import Link from 'next/link'
 
 // ** MUI Components
@@ -139,8 +141,8 @@ function LoginPage() {
       ) : null}
       <RightWrapper
         sx={{
-          ...(skin === 'bordered' &&
-            !hidden && { borderLeft: `1px solid ${theme.palette.divider}` }),
+          ...(skin === 'bordered'
+            && !hidden && { borderLeft: `1px solid ${theme.palette.divider}` }),
         }}
       >
         <Box sx={{ mx: 'auto', maxWidth: 400 }}>
@@ -182,7 +184,10 @@ function LoginPage() {
             </Typography>
           </Box>
           <Typography variant='h6' sx={{ mb: 1.5 }}>
-            Welcome to {themeConfig.templateName}! 👋🏻
+            Welcome to
+            {' '}
+            {themeConfig.templateName}
+            ! 👋🏻
           </Typography>
           <Typography sx={{ mb: 6, color: 'text.secondary' }}>
             Please sign-in to your account and start the adventure
@@ -200,7 +205,12 @@ function LoginPage() {
               variant='caption'
               sx={{ mb: 2, display: 'block', color: 'primary.main' }}
             >
-              Admin: <strong>scott@example.com</strong> / Pass:{' '}
+              Admin:
+              {' '}
+              <strong>scott@example.com</strong>
+              {' '}
+              / Pass:
+              {' '}
               <strong>anything</strong>
             </Typography>
           </Alert>
@@ -248,7 +258,7 @@ function LoginPage() {
                     id='auth-login-v2-password'
                     error={Boolean(errors.password)}
                     type={showPassword ? 'text' : 'password'}
-                    endAdornment={
+                    endAdornment={(
                       <InputAdornment position='end'>
                         <IconButton
                           edge='end'
@@ -261,7 +271,7 @@ function LoginPage() {
                           />
                         </IconButton>
                       </InputAdornment>
-                    }
+                    )}
                   />
                 )}
               />

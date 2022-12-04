@@ -30,13 +30,13 @@ function Error401() {
   const theme = useTheme();
 
   return (
-    <Box className="content-center">
+    <Box className='content-center'>
       <Box sx={{
         p: 5, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
       }}
       >
         <BoxWrapper>
-          <Typography variant="h4" sx={{ mb: 2 }}>
+          <Typography variant='h4' sx={{ mb: 2 }}>
             You are not authorized!
           </Typography>
           <Typography sx={{ mb: 6, color: 'text.secondary' }}>
@@ -44,11 +44,11 @@ function Error401() {
             <br />
             Please contact your site administrator.
           </Typography>
-          <Button href="/" component={Link} variant="contained">
+          <Button href='/' component={Link} variant='contained'>
             Back to Home
           </Button>
         </BoxWrapper>
-        <Img width="450" alt="error-illustration" src={`/images/pages/girl-with-laptop-${theme.palette.mode}.png`} />
+        <Img width='450' alt='error-illustration' src={`/images/pages/girl-with-laptop-${theme.palette.mode}.png`} />
       </Box>
     </Box>
   );

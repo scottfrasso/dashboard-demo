@@ -5,7 +5,7 @@ import { AuthCredentialsDTO, JWTPayload } from '@dashboard/dtos'
 
 import { comparePassword } from '../utils/encryption'
 import { PrismaClient } from '@prisma/client'
-import { PRISMA_PROVIDER_NAME } from 'src/provider-names'
+import { PRISMA_PROVIDER_NAME } from '../provider-names'
 
 @Injectable()
 export class AuthService {
