@@ -4,5 +4,10 @@
   "private": true,
   "license": "UNLICENSED",
   "main": "src/main.ts",
-  "dependencies": {}
+  "scripts": {
+    "lint": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\""
+  },
+  "dependencies": {
+    "eslint-plugin-prettier": "^4.2.1"
+  }
 }

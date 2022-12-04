@@ -10,7 +10,7 @@ function SecondPage() {
     <Grid container spacing={6}>
       <Grid item xs={12}>
         <Card>
-          <CardHeader title="Create Awesome 🙌" />
+          <CardHeader title='Create Awesome 🙌' />
           <CardContent>
             <Typography sx={{ mb: 2 }}>This is your second page.</Typography>
             <Typography>
