@@ -1,22 +1,30 @@
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 
 import { AuthCredentialsDTO, JWTPayload } from '@dashboard/dtos'
 
-import { UsersService } from '../users/users.service'
+import { comparePassword } from '../utils/encryption'
+import { PrismaClient } from '@prisma/client'
+import { PRISMA_PROVIDER_NAME } from 'src/provider-names'
 
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
-    private jwtService: JwtService,
+    private readonly jwtService: JwtService,
+    @Inject(PRISMA_PROVIDER_NAME) private readonly prismaClient: PrismaClient,
   ) {}
 
   async login(email: string, password: string): Promise<AuthCredentialsDTO> {
-    const user = await this.usersService.findOneByEmail(email)
-    if (!user || !password) {
-      // TODO: Better error handling
+    const user = await this.prismaClient.user.findUnique({
+      where: { email: email.toLowerCase().trim() },
+    })
+    if (!user) {
       throw new Error('User not found')
+    }
+
+    const passwordMatch = await comparePassword(password, user.password)
+    if (!passwordMatch) {
+      throw new Error('Invalid password')
     }
 
     const payload = { email: user.email } as JWTPayload

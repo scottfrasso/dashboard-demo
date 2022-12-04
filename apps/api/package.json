@@ -6,6 +6,8 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "migrate": "prisma migrate dev --schema src/data/schema.prisma",
+    "seed": "ts-node -r dotenv/config src/data/seed.ts",
     "generate": "prisma generate --schema src/data/schema.prisma",
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -31,6 +33,7 @@
     "@prisma/client": "^4.7.1",
     "@types/passport-jwt": "^3.0.7",
     "@types/passport-local": "^1.0.34",
+    "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",

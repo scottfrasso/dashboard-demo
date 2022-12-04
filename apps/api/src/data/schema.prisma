@@ -22,6 +22,8 @@ model SurveyResponse {
 
   number Int
   color SurveyFavoriteColor
+
+  createdAt DateTime @default(now())
 }
 
 enum SurveyFavoriteColor {
