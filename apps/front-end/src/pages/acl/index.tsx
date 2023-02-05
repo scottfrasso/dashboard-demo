@@ -19,7 +19,7 @@ function ACLPage() {
     <Grid container spacing={6}>
       <Grid item md={6} xs={12}>
         <Card>
-          <CardHeader title="Common" />
+          <CardHeader title='Common' />
           <CardContent>
             <Typography sx={{ mb: 4 }}>
               No ability is required to view this card
@@ -34,7 +34,7 @@ function ACLPage() {
       {ability?.can('read', 'analytics') ? (
         <Grid item md={6} xs={12}>
           <Card>
-            <CardHeader title="Analytics" />
+            <CardHeader title='Analytics' />
             <CardContent>
               <Typography sx={{ mb: 4 }}>
                 User with &apos;Analytics&apos; subject&apos;s &apos;Read&apos;

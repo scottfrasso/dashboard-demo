@@ -30,21 +30,21 @@ function Error500() {
   const theme = useTheme();
 
   return (
-    <Box className="content-center">
+    <Box className='content-center'>
       <Box sx={{
         p: 5, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
       }}
       >
         <BoxWrapper>
-          <Typography variant="h4" sx={{ mb: 2 }}>
+          <Typography variant='h4' sx={{ mb: 2 }}>
             Internal server error :(
           </Typography>
           <Typography sx={{ mb: 6, color: 'text.secondary' }}>Oops, something went wrong!</Typography>
-          <Button href="/" component={Link} variant="contained">
+          <Button href='/' component={Link} variant='contained'>
             Back to Home
           </Button>
         </BoxWrapper>
-        <Img width="500" alt="error-illustration" src={`/images/pages/page-misc-error-${theme.palette.mode}.png`} />
+        <Img width='500' alt='error-illustration' src={`/images/pages/page-misc-error-${theme.palette.mode}.png`} />
       </Box>
     </Box>
   );

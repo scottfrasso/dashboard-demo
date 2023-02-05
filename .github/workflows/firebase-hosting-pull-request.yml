@@ -13,11 +13,18 @@ jobs:
         run: yarn install
       - name: Install Eslint
         run: npm install -g eslint@8.26.0
-      - name: Build static assets
+      - name: Lint
+        run: yarn run lint
+      - name: Build the front-end static assets
         run: yarn workspace @dashboard/front-end run build
-      - name: Export static site
+      - name: Export the front-end static site
         run: yarn workspace @dashboard/front-end run export
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Build the landing page
+        run: yarn workspace @dashboard/landing-page build
+      - name: Deploy sites
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        env:
+          NEXT_PUBLIC_API_URL: https://api-dev-73g76zkzja-lm.a.run.app
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DASH_DEMO_F1846 }}'
