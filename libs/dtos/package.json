@@ -6,6 +6,7 @@
   "main": "build/main",
   "typings": "build/main",
   "scripts": {
+    "test": "echo \"No-op for now\" && exit 0",
     "lint": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
     "build": "rimraf build && npx tsc"
   },
