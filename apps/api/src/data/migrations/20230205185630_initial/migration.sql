@@ -1,4 +1,7 @@
 -- CreateEnum
+CREATE TYPE "GroupRole" AS ENUM ('ADMIN', 'MEMBER');
+
+-- CreateEnum
 CREATE TYPE "ReactionType" AS ENUM ('LIKE', 'LOVE', 'HAHA', 'WOW', 'SAD', 'ANGRY');
 
 -- CreateTable
@@ -27,7 +30,7 @@ CREATE TABLE "Group" (
 -- CreateTable
 CREATE TABLE "GroupMembership" (
     "id" SERIAL NOT NULL,
-    "role" TEXT NOT NULL,
+    "role" "GroupRole" NOT NULL,
     "groupId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

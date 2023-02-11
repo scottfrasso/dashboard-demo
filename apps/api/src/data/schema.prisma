@@ -35,9 +35,14 @@ model Group {
   updatedAt DateTime @updatedAt
 }
 
+enum GroupRole {
+  ADMIN
+  MEMBER
+}
+
 model GroupMembership {
   id        Int      @id @default(autoincrement())
-  role      String
+  role      GroupRole
 
   groupId   Int
   group     Group    @relation(fields: [groupId], references: [id])
