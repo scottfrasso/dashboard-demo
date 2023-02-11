@@ -3,8 +3,8 @@ import { Inject, Injectable } from '@nestjs/common'
 
 import { Post, PrismaClient } from '@prisma/client'
 
-import { DataService } from 'src/data/data.service'
-import { PRISMA_PROVIDER_NAME } from 'src/provider-names'
+import { DataService } from '../data/data.service'
+import { PRISMA_PROVIDER_NAME } from '../provider-names'
 
 @Injectable()
 export class PostsService {

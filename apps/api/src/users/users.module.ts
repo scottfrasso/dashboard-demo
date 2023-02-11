@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common'
 
 import { UsersController } from './users.controller'
 import { UsersService } from './users.service'
-import { DataModule } from 'src/data/data.module'
+import { DataModule } from '../data/data.module'
 
 @Module({
   imports: [DataModule],

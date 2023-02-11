@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@nestjs/common'
 import { PrismaClient } from '@prisma/client'
 import { UserMeResponseDTO, UserRoleDTO } from '@dashboard/dtos'
 
-import { PRISMA_PROVIDER_NAME } from 'src/provider-names'
+import { PRISMA_PROVIDER_NAME } from '../provider-names'
 
 @Injectable()
 export class UsersService {

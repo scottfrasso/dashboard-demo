@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 
-import { DataModule } from 'src/data/data.module'
+import { DataModule } from '../data/data.module'
 import { GroupsService } from './group.service'
 import { GroupsController } from './group.controller'
 

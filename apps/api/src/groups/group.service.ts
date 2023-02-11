@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common'
 
-import { Group, GroupMembership, PrismaClient, Prisma } from '@prisma/client'
+import { Group, GroupMembership, PrismaClient } from '@prisma/client'
 import { GroupDTO, GroupMemberDTO } from '@dashboard/dtos'
 
 import { PRISMA_PROVIDER_NAME } from '../provider-names'
-import { DataService } from 'src/data/data.service'
+import { DataService } from '../data/data.service'
 
 @Injectable()
 export class GroupsService {

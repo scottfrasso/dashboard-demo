@@ -3,7 +3,7 @@ import { Controller, Get, Param } from '@nestjs/common'
 import { AuthorizedUser, PostDTO } from '@dashboard/dtos'
 
 import { PostsService } from './post.service'
-import { User } from 'src/decorators/user.decorator'
+import { User } from '../decorators'
 
 @Controller('posts')
 export class PostsController {
