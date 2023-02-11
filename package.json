@@ -10,10 +10,13 @@
   ],
   "scripts": {
     "lint": "yarn workspaces run lint",
-    "build": "yarn workspace @dashboard/front-end run build && yarn workspace @dashboard/front-end run export",
-    "ci": "yarn run lint && yarn run build"
+    "build": "yarn workspace @dashboard/dtos build && yarn workspace @dashboard/api run build && yarn workspace @dashboard/front-end run build && yarn workspace @dashboard/front-end run export",
+    "ci": "yarn run lint && yarn run build",
+    "start:api": "yarn workspace @dashboard/api run start:dev",
+    "start:front-end": "yarn workspace @dashboard/front-end run start:dev"
   },
   "devDependencies": {
-    "eslint-plugin-react": "7.31.11"
+    "eslint-plugin-react": "7.31.11",
+    "gts": "^3.1.1"
   }
 }

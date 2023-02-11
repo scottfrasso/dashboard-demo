@@ -1,6 +1,10 @@
+export enum UserRoleDTO {
+  Admin = 'admin',
+}
+
 export type UserMeResponseDTO = {
-  id: string
-  role: string
+  id: number
+  role: UserRoleDTO
   email: string
   fullName: string
   avatar?: string
