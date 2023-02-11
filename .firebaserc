@@ -7,9 +7,6 @@
       "hosting": {
         "front-end": [
           "dash-demo-f1846"
-        ],
-        "landing-page": [
-          "scotts-landing-page"
         ]
       }
     }
