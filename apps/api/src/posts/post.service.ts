@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common'
 
 import { PrismaClient } from '@prisma/client'
-import { PostDTO, CreatePostDTO } from '@dashboard/dtos'
+import { PostDTO, CreatePostDTO, UserRoleDTO } from '@dashboard/dtos'
 
 import { DataService } from '../data/data.service'
 import { PRISMA_PROVIDER_NAME } from '../provider-names'
@@ -26,6 +26,7 @@ export class PostsService {
       author: {
         id: post.author.id,
         fullName: post.author.name,
+        role: UserRoleDTO.ADMIN, // TODO: Get role from the database
       },
     }
   }
