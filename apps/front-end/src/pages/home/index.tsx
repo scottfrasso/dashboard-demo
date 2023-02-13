@@ -1,38 +1,80 @@
-// ** MUI Imports
-import Card from '@mui/material/Card';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
+import React, { useEffect } from 'react'
+import moment from 'moment'
+import {
+  CardContent, Card, CardHeader, Grid,
+} from '@mui/material'
 
-function Home() {
-  return (
-    <Grid container spacing={6}>
-      <Grid item xs={12}>
-        <Card>
-          <CardHeader title='Kick start your project 🚀' />
-          <CardContent>
-            <Typography sx={{ mb: 2 }}>All the best for your new project.</Typography>
-            <Typography>
-              Please make sure to read our Template Documentation to understand where to go from here and how to use our
-              template.
-            </Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-      <Grid item xs={12}>
-        <Card>
-          <CardHeader title='ACL and JWT 🔒' />
-          <CardContent>
-            <Typography sx={{ mb: 2 }}>
-              Access Control (ACL) and Authentication (JWT) are the two main security features of our template and are implemented in the starter-kit as well.
-            </Typography>
-            <Typography>Please read our Authentication and ACL Documentations to get more out of them.</Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-    </Grid>
-  );
+import { PostDTO } from '@dashboard/dtos'
+import { api } from 'src/hooks/useApi'
+
+/**
+ * Given a date, return a string that displays the date in a human readable format
+ * @param myDate - the date to convert
+ * @returns a string that displays the date in a human readable format (ie: Today, Yesterday, Last Week, etc)
+ */
+function dateToFromNowDaily(myDate: string): string {
+  const fromNow = moment(myDate).fromNow()
+
+  return moment(myDate).calendar(null, {
+    lastWeek: '[Last] dddd',
+    lastDay: '[Yesterday]',
+    sameDay: '[Today]',
+    nextDay: '[Tomorrow]',
+    nextWeek: 'dddd',
+    // when the date is further away, use from-now functionality
+    sameElse() {
+      return `[${fromNow}]`
+    },
+  })
 }
 
-export default Home;
+function Home() {
+  const [posts, setPosts] = React.useState<PostDTO[] | undefined>(undefined)
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const postList = await api.posts.getPosts()
+      setPosts(postList)
+    }
+    fetchPosts().catch(console.error)
+  }, [])
+
+  if (!posts) {
+    return <div>Loading...</div>
+  }
+
+  return (
+    <Grid container spacing={3}>
+      {posts
+        && posts.map((post) => (
+          <Grid key={post.id} item xs={3}>
+            <Card>
+              <CardHeader
+                title={`Post from ${post.author.fullName} ${dateToFromNowDaily(
+                  post.createdAt,
+                )}`}
+              />
+              {post.imageURL && (
+                <CardContent
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <img
+                    style={{ maxWidth: '10rem', maxHeight: '10rem' }}
+                    alt='A post with a meme in it'
+                    src={post.imageURL}
+                  />
+                </CardContent>
+              )}
+              {post.content && <CardContent>{post.content}</CardContent>}
+            </Card>
+          </Grid>
+        ))}
+    </Grid>
+  )
+}
+
+export default Home

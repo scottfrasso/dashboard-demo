@@ -1,13 +1,8 @@
-import {
-  useState, ReactNode, MouseEvent, useEffect,
-} from 'react'
-import Link from 'next/link'
+import { useState, ReactNode } from 'react'
 
 // ** MUI Components
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import Checkbox from '@mui/material/Checkbox'
 import TextField from '@mui/material/TextField'
 import InputLabel from '@mui/material/InputLabel'
 import IconButton from '@mui/material/IconButton'
@@ -19,7 +14,6 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 import { styled, useTheme } from '@mui/material/styles'
 import FormHelperText from '@mui/material/FormHelperText'
 import InputAdornment from '@mui/material/InputAdornment'
-import FormControlLabel from '@mui/material/FormControlLabel'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -64,12 +58,6 @@ const RightWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   },
 }))
 
-const LinkStyled = styled(Link)(({ theme }) => ({
-  fontSize: '0.875rem',
-  textDecoration: 'none',
-  color: theme.palette.primary.main,
-}))
-
 const schema = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().min(5).required(),
@@ -86,7 +74,6 @@ interface FormData {
 }
 
 function LoginPage() {
-  const [rememberMe, setRememberMe] = useState<boolean>(true)
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
   // ** Hooks
@@ -112,7 +99,7 @@ function LoginPage() {
 
   const onSubmit = (data: FormData) => {
     const { email, password } = data
-    auth.login({ email, password, rememberMe }, () => {
+    auth.login({ email, password }, () => {
       setError('email', {
         type: 'manual',
         message: 'Email or Password is invalid',

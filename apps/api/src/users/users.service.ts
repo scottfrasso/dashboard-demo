@@ -1,19 +1,33 @@
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 
-import { UserMeResponseDTO } from '@dashboard/dtos'
+import { PrismaClient } from '@prisma/client'
+import { UserMeResponseDTO, UserRoleDTO } from '@dashboard/dtos'
+
+import { PRISMA_PROVIDER_NAME } from '../provider-names'
 
 @Injectable()
 export class UsersService {
-  private readonly users: UserMeResponseDTO[] = [
-    {
-      id: '123',
-      role: 'admin',
-      email: 'scott@example.com',
-      fullName: 'Scott F.',
-    },
-  ]
+  constructor(
+    @Inject(PRISMA_PROVIDER_NAME) private readonly prismaClient: PrismaClient,
+  ) {}
 
   async findOneByEmail(email: string): Promise<UserMeResponseDTO | undefined> {
-    return this.users.find((user) => user.email === email)
+    const user = await this.prismaClient.user.findFirst({
+      where: {
+        email: email.toLowerCase().trim(),
+      },
+    })
+
+    if (!user) {
+      return undefined
+    }
+
+    return {
+      id: user.id,
+      // TODO: Pull this from the DB
+      role: UserRoleDTO.Admin,
+      email: user.email,
+      fullName: user.name,
+    }
   }
 }

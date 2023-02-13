@@ -1,5 +1,5 @@
 // ** Type import
-import { VerticalNavItemsType } from 'src/@core/layouts/types';
+import { VerticalNavItemsType } from 'src/@core/layouts/types'
 
 const navigation = (): VerticalNavItemsType => [
   {
@@ -8,17 +8,10 @@ const navigation = (): VerticalNavItemsType => [
     icon: 'bx:home-circle',
   },
   {
-    title: 'Second Page',
-    path: '/second-page',
-    icon: 'bx:envelope',
+    title: 'Post',
+    path: '/post/create',
+    icon: 'bx:bxs-invader',
   },
-  {
-    path: '/acl',
-    action: 'read',
-    subject: 'acl-page',
-    title: 'Access Control',
-    icon: 'bx:shield',
-  },
-];
+]
 
-export default navigation;
+export default navigation

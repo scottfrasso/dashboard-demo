@@ -1,3 +1,6 @@
-import { SurveyFavoriteColor } from '@prisma/client'
+import { Post, User } from '@prisma/client'
 
-export type SurveyFavoriteColorEnumDBO = SurveyFavoriteColor
+// Posts
+export type PostWithAuthor = Post & {
+  author: User
+}
