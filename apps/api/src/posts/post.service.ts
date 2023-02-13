@@ -26,7 +26,7 @@ export class PostsService {
       author: {
         id: post.author.id,
         fullName: post.author.name,
-        role: UserRoleDTO.ADMIN, // TODO: Get role from the database
+        role: 'admin', // TODO: Get role from the database
       },
     }
   }
