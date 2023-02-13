@@ -1,10 +1,14 @@
-import { PostDTO } from '@dashboard/dtos'
 import { Inject, Injectable } from '@nestjs/common'
 
-import { Post, PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
+import { PostDTO, CreatePostDTO } from '@dashboard/dtos'
 
 import { DataService } from '../data/data.service'
 import { PRISMA_PROVIDER_NAME } from '../provider-names'
+import { winston } from '../utils/logger'
+import { PostWithAuthor } from '../data/types'
+
+const logger = winston.child({ module: 'PostsService' })
 
 @Injectable()
 export class PostsService {
@@ -12,13 +16,17 @@ export class PostsService {
     @Inject(PRISMA_PROVIDER_NAME) private readonly prismaClient: PrismaClient,
   ) {}
 
-  public static postToPostDTO(post: Post): PostDTO {
+  public static postToPostDTO(post: PostWithAuthor): PostDTO {
     return {
       id: post.id,
       groupId: post.groupId,
       imageURL: post.imageURL,
       content: post.content,
       createdAt: post.createdAt.toISOString(),
+      author: {
+        id: post.author.id,
+        fullName: post.author.name,
+      },
     }
   }
 
@@ -42,6 +50,7 @@ export class PostsService {
         published: true,
       },
       include: {
+        author: true,
         reactions: true,
       },
       orderBy: {
@@ -50,7 +59,7 @@ export class PostsService {
       take: 100,
     })
 
-    return posts.map((post: Post) => PostsService.postToPostDTO(post))
+    return posts.map((post: PostWithAuthor) => PostsService.postToPostDTO(post))
   }
 
   async getPost(userId: number, postId: number): Promise<PostDTO> {
@@ -63,6 +72,7 @@ export class PostsService {
         published: true,
       },
       include: {
+        author: true,
         reactions: true,
       },
     })
@@ -72,5 +82,35 @@ export class PostsService {
     }
 
     return PostsService.postToPostDTO(post)
+  }
+
+  async createPost({
+    userId,
+    post,
+  }: {
+    userId: number
+    post: CreatePostDTO
+  }): Promise<PostDTO> {
+    let createdPost: PostWithAuthor
+    logger.info('Creating post', { userId, post })
+    try {
+      createdPost = await this.prismaClient.post.create({
+        include: {
+          author: true,
+        },
+        data: {
+          content: post.content,
+          imageURL: post.imageURL,
+          groupId: post.groupId,
+          authorId: userId,
+          published: true,
+        },
+      })
+    } catch (error) {
+      logger.error(error)
+      throw new Error('Error creating post')
+    }
+
+    return PostsService.postToPostDTO(createdPost)
   }
 }

@@ -27,7 +27,7 @@ export class AuthService {
       throw new Error('Invalid password')
     }
 
-    const payload = { email: user.email } as JWTPayload
+    const payload = { email: user.email, userId: user.id } as JWTPayload
     return {
       authToken: this.jwtService.sign(payload),
     } as AuthCredentialsDTO

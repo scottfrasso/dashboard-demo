@@ -1,6 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post } from '@nestjs/common'
 
-import { AuthorizedUser, PostDTO } from '@dashboard/dtos'
+import { AuthorizedUser, PostDTO, CreatePostDTO } from '@dashboard/dtos'
 
 import { PostsService } from './post.service'
 import { User } from '../decorators'
@@ -20,5 +20,13 @@ export class PostsController {
     @Param('postId') postId: number,
   ): Promise<PostDTO> {
     return await this.postsService.getPost(user.userId, postId)
+  }
+
+  @Post()
+  async createPost(
+    @User() user: AuthorizedUser,
+    @Body() post: CreatePostDTO,
+  ): Promise<PostDTO> {
+    return await this.postsService.createPost({ userId: user.userId, post })
   }
 }

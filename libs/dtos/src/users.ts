@@ -2,10 +2,13 @@ export enum UserRoleDTO {
   Admin = 'admin',
 }
 
-export type UserMeResponseDTO = {
+export type UserDTO = {
   id: number
   role: UserRoleDTO
-  email: string
   fullName: string
   avatar?: string
+}
+
+export type UserMeResponseDTO = UserDTO & {
+  email: string
 }

@@ -3,6 +3,8 @@ import axios, { Axios, Method, AxiosRequestConfig } from 'axios'
 import { AuthCredentialsDTO } from '@dashboard/dtos'
 import { Users } from './users'
 import { Auth } from './auth'
+import { Posts } from './posts'
+import { Groups } from './groups'
 
 export class ApiClient {
   private credentials?: AuthCredentialsDTO
@@ -13,12 +15,18 @@ export class ApiClient {
 
   public readonly auth: Auth
 
+  public readonly posts: Posts
+
+  public readonly groups: Groups
+
   constructor(credentials?: AuthCredentialsDTO) {
     this.axiosClient = new Axios()
     this.credentials = credentials
 
     this.users = new Users(this)
     this.auth = new Auth(this)
+    this.posts = new Posts(this)
+    this.groups = new Groups(this)
   }
 
   public setCredentials(authToken: string): void {
